@@ -1,18 +1,31 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URL as string;
+const getMongoUri = () => {
+  const uri = process.env.MONGODB_URI ?? process.env.MONGODB_URL;
+  if (!uri) {
+    throw new Error(
+      "Missing MongoDB connection string. Set MONGODB_URI (or MONGODB_URL) in your environment."
+    );
+  }
+  return uri;
+};
 
-if (!MONGODB_URI) {
-  throw new Error("Missing MongoDB connection string. Set MONGODB_URI (or MONGODB_URL) in your environment file.");
-}
+const globalForMongoose = globalThis as unknown as {
+  conn?: Promise<typeof mongoose> | null;
+};
 
 export async function connectDB() {
+  if (!globalForMongoose.conn) {
+    globalForMongoose.conn = mongoose.connect(getMongoUri());
+  }
+
   try {
-    await mongoose.connect(MONGODB_URI);
-    console.log("DB connected successfully");
-    return mongoose.connection;
+    await globalForMongoose.conn;
   } catch (error) {
     console.error("MongoDB connection error:", error);
+    globalForMongoose.conn = null;
     throw new Error("Failed to connect to MongoDB");
   }
+
+  return globalForMongoose.conn;
 }

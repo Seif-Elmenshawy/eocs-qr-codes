@@ -44,3 +44,12 @@ npm run seed
 ```
 
 The script is idempotent and will only insert the sample participant if it does not already exist.
+
+### On Vercel
+
+The same script also runs automatically via the `postbuild` hook on every Vercel deployment. Because it uses `$setOnInsert` upserts, running it repeatedly is safe.
+
+Requirements:
+
+- `MONGODB_URI` must be set as a Vercel environment variable **and available during builds** (in Vercel's Environment Variables settings, the scope must not be "Runtime only"). If it's only available at runtime, the `postbuild` seed will fail and block the deployment.
+- Your MongoDB host must allow connections from Vercel's build machines (e.g. allow `0.0.0.0/0` on Atlas, or add the listed build IPs).

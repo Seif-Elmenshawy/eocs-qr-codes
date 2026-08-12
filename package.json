@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "node scripts/seed.mjs",
     "start": "next start",
     "lint": "eslint",
     "seed": "node scripts/seed.mjs"
