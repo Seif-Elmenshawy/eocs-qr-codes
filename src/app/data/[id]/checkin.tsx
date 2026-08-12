@@ -77,7 +77,7 @@ function SubmitButton({ done }: { done: boolean }) {
       <button
         type="submit"
         disabled={pending}
-        className="shrink-0 rounded-full border border-eocs-gold/30 bg-eocs-gold/5 px-4 py-2 text-xs font-semibold uppercase tracking-wider text-eocs-gold transition hover:bg-eocs-gold/15 disabled:opacity-60"
+        className="w-full shrink-0 rounded-full border border-eocs-gold/30 bg-eocs-gold/5 px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-eocs-gold transition hover:bg-eocs-gold/15 disabled:opacity-60 sm:w-auto"
       >
         {pending ? "Saving…" : "Undo"}
       </button>
@@ -88,7 +88,7 @@ function SubmitButton({ done }: { done: boolean }) {
     <button
       type="submit"
       disabled={pending}
-      className="shrink-0 rounded-full bg-eocs-gold px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#1a1412] shadow-[0_4px_16px_rgba(173,130,49,0.35)] transition hover:-translate-y-0.5 hover:bg-[#c49a3a] disabled:opacity-60"
+      className="w-full shrink-0 rounded-full bg-eocs-gold px-4 py-2.5 text-xs font-bold uppercase tracking-wider text-[#1a1412] shadow-[0_4px_16px_rgba(173,130,49,0.35)] transition hover:-translate-y-0.5 hover:bg-[#c49a3a] disabled:opacity-60 sm:w-auto"
     >
       {pending ? "Saving…" : "Mark done"}
     </button>
@@ -103,8 +103,8 @@ export default function CheckInPanel({ participant }: CheckInPanelProps) {
   const doneCount = steps.filter((step) => step.done).length;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-lg rounded-2xl border border-eocs-gold/15 bg-eocs-dark/35 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
+    <main className="flex min-h-dvh flex-col items-center justify-center px-4 py-8 sm:py-12">
+      <div className="w-full max-w-lg rounded-2xl border border-eocs-gold/15 bg-eocs-dark/35 p-5 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
         <p className="text-center text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-eocs-gold">
           EOCS · Participant Check-in
         </p>
@@ -141,7 +141,7 @@ export default function CheckInPanel({ participant }: CheckInPanelProps) {
             <li key={step.key} className="relative">
               <form
                 action={updateStatus}
-                className="flex items-center gap-4 rounded-xl border border-eocs-gold/10 bg-eocs-dark/40 p-4 transition hover:border-eocs-gold/35"
+                className="flex flex-wrap items-center gap-3 rounded-xl border border-eocs-gold/10 bg-eocs-dark/40 p-4 transition hover:border-eocs-gold/35"
               >
                 <input type="hidden" name="id" value={participant.id} />
                 <input type="hidden" name="field" value={step.key} />

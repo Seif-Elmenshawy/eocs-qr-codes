@@ -8,8 +8,8 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   const { error } = await searchParams;
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-sm rounded-2xl border border-eocs-gold/15 bg-eocs-dark/35 p-8 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-md">
+    <main className="flex min-h-dvh flex-col items-center justify-center px-4 py-8 sm:py-12">
+      <div className="w-full max-w-sm rounded-2xl border border-eocs-gold/15 bg-eocs-dark/35 p-6 shadow-[0_8px_40px_rgba(0,0,0,0.35)] backdrop-blur-md sm:p-8">
         <p className="text-center text-[0.65rem] font-semibold uppercase tracking-[0.35em] text-eocs-gold">
           EOCS · Staff Access
         </p>
