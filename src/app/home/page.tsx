@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { Scanner, IDetectedBarcode } from "@yudiel/react-qr-scanner";
 
 type ScanStatus = "idle" | "redirecting" | "unrecognized" | "error";
@@ -131,6 +132,13 @@ export default function QrScanPage() {
           )}
         </p>
       </div>
+
+      <Link
+        href="/dashboard"
+        className="mt-8 text-xs uppercase tracking-widest text-eocs-light/40 transition hover:text-eocs-gold"
+      >
+        Open dashboard
+      </Link>
     </main>
   );
 }
