@@ -1,5 +1,8 @@
 import "dotenv/config";
+import dns from "node:dns";
 import mongoose from "mongoose";
+
+dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
 const mongoUri = process.env.MONGODB_URI ?? process.env.MONGODB_URL;
 
@@ -11,6 +14,7 @@ const participantSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     id_card: { type: String, required: true },
+    email: { type: String, required: false },
     got_on_the_bus: { type: Boolean, required: true },
     entered_uni: { type: Boolean, required: true },
     ate: { type: Boolean, required: true },
@@ -27,6 +31,7 @@ const seedParticipants = [
   {
     name: "Sample Participant",
     id_card: "INITIAL-0001",
+    email: "participant@example.com",
     got_on_the_bus: false,
     entered_uni: false,
     ate: false,

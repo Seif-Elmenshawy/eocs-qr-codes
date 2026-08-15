@@ -53,3 +53,46 @@ Requirements:
 
 - `MONGODB_URI` must be set as a Vercel environment variable **and available during builds** (in Vercel's Environment Variables settings, the scope must not be "Runtime only"). If it's only available at runtime, the `postbuild` seed will fail and block the deployment.
 - Your MongoDB host must allow connections from Vercel's build machines (e.g. allow `0.0.0.0/0` on Atlas, or add the listed build IPs).
+
+## Send QR code emails
+
+The email script reads participants from MongoDB, generates a QR code for each one
+(encoding a link to `/data/<id>`), and sends the code to the participant's email
+address via SMTP (nodemailer).
+
+Prerequisites:
+
+- The `Participant` collection must have an `email` field. Add the field to your
+  documents or update them before running the script.
+- SMTP credentials and a base URL in your environment:
+
+```bash
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=your-smtp-username
+SMTP_PASS=your-smtp-password
+EMAIL_FROM="EOCS <no-reply@example.com>"
+EMAIL_SUBJECT=Your EOCS QR Code
+BASE_URL=http://localhost:3000
+```
+
+Run:
+
+```bash
+npm run send-emails
+```
+
+Useful options:
+
+```bash
+# Preview what would be sent without actually sending
+npm run send-emails -- --dry-run
+
+# Send everything to a single test address
+npm run send-emails -- --to you@example.com
+```
+
+The email HTML lives in `scripts/email-template.html`. It supports the
+placeholders `{{name}}`, `{{id_card}}`, `{{link}}`, and `{{qr}}` (the QR image).
+Customize it to match your design.

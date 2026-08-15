@@ -11,12 +11,15 @@ function extractId(raw: string): string | null {
   const urlMatch = value.match(/\/data\/([^/?#]+)/i);
   if (urlMatch) return urlMatch[1];
   if (/^[a-f0-9]{24}$/i.test(value)) return value;
+  const anyId = value.match(/\b[a-f0-9]{24}\b/i);
+  if (anyId) return anyId[0];
   return null;
 }
 
 export default function QrScanPage() {
   const router = useRouter();
   const [status, setStatus] = useState<ScanStatus>("idle");
+  const [lastValue, setLastValue] = useState<string | null>(null);
   const [cameraKey, setCameraKey] = useState(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -33,6 +36,7 @@ export default function QrScanPage() {
 
       const id = extractId(value);
       if (!id) {
+        setLastValue(value);
         setStatus("unrecognized");
         return;
       }
@@ -51,6 +55,7 @@ export default function QrScanPage() {
 
   const retry = useCallback(() => {
     setStatus("idle");
+    setLastValue(null);
     setCameraKey((k) => k + 1);
   }, []);
 
@@ -113,7 +118,14 @@ export default function QrScanPage() {
               Participant found · Redirecting…
             </span>
           ) : status === "unrecognized" ? (
-            <span className="text-red-300">Unrecognized QR code. Please try again.</span>
+            <span className="text-red-300">
+              Unrecognized QR code. Please try again.
+              {lastValue && (
+                <span className="mt-2 block break-all text-xs text-red-200/70">
+                  Decoded: {lastValue}
+                </span>
+              )}
+            </span>
           ) : (
             <span className="text-eocs-light/50">Ready to scan</span>
           )}

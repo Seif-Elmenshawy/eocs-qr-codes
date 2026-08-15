@@ -8,13 +8,16 @@
     "postbuild": "node scripts/seed.mjs",
     "start": "next start",
     "lint": "eslint",
-    "seed": "node scripts/seed.mjs"
+    "seed": "node scripts/seed.mjs",
+    "send-emails": "node scripts/send-emails.mjs"
   },
   "dependencies": {
     "@yudiel/react-qr-scanner": "^2.6.0",
     "dotenv": "^17.4.2",
     "mongoose": "^9.9.2",
     "next": "16.3.0",
+    "nodemailer": "^9.0.5",
+    "qrcode": "^1.5.4",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },

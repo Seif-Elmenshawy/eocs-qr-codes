@@ -4,6 +4,7 @@ export interface IParticipant {
     _id: string
     name: string
     id_card: string
+    email?: string
     got_on_the_bus:boolean
     entered_uni: boolean
     ate: boolean
@@ -13,6 +14,7 @@ export interface IParticipant {
 const ParticipantSchema = new Schema<IParticipant>({
     name: {type: String, required: true},
     id_card: {type:String, required: true},
+    email: {type: String, required: false},
     got_on_the_bus: {type:Boolean, required:true},
     entered_uni: {type:Boolean, required:true},
     ate: {type: Boolean, required: true},
